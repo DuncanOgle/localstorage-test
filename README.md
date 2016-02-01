@@ -68,7 +68,7 @@ Put data into Service local variable, and work with that
 
 Getting file over AJAX, save to Service local variable, then repeatedly save back to localStorage.
 
-### Accessing data 1000 times from localStorage
+### Saving data 1000 times to localStorage
 
 Cache cleared before each run
 
@@ -81,7 +81,7 @@ Entities  	| Chrome 	| Firefox	| Safari
 Time-to-run 	| 302 	| 124	| 152
 
 ### Conclusion
-Saving data takes little to no time
+Saving data takes little time
 
 ## Test 4
 
