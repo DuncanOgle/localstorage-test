@@ -1,6 +1,14 @@
 # localstorage-test
 A test of localStorage capabilities in browsers, specifically using AngularJS
 
+## TL;DR
+
+Accessing localStorage is slow, writing is fast.
+
+Load to localStorage at the start, work with that, and periodically save that variable back to localStorage
+
+## Some notes
+
 ### Data size
 
 Entities in array  | Size (KB)
@@ -24,6 +32,10 @@ Safari 9.0.2 (11601.3.9)
  - 2.8 GHz Intel Core i7
  - 16GB 1600MHz DDR3 RAM
  - 512GB SSD
+
+## Test 1
+
+Getting file over AJAX, then repeatedly access the variable.
 
 ### Accessing data 1000 times from localStorage
 
@@ -52,4 +64,49 @@ Time-to-run 	| 163		| 165		| 116
 ### Conclusion
 Put data into Service local variable, and work with that
 
-Periodically (every 500ms for example) save the data back to localStorage
+## Test 2
+
+Getting file over AJAX, save to Service local variable, then repeatedly save back to localStorage.
+
+### Accessing data 1000 times from localStorage
+
+Cache cleared before each run
+
+Entities  	| Chrome 	| Firefox	| Safari
+-------------	| ----- | -----	| -----
+1  				| 0.005 | 0.002	| 0.001
+250  			| 0.026 | 0.002	| 0.001
+500  			| 0.031 | 0.002	| 0
+1000  			| 0.046 | 0.002	| 0
+Time-to-run 	| 302 	| 124	| 152
+
+### Conclusion
+Saving data takes little to no time
+
+## Test 4
+
+Getting file over AJAX, then repeatedly loop through every item in the array (simulating finding a specific item)
+
+### Accessing data 1000 times from localStorage
+
+Cache cleared before each run
+
+Entities  	| Chrome 	| Firefox	| Safari
+-------------	| ------- | -----	| -----
+1  				| 0.03 	| 0.019	| 0.013
+250  			| 7.388 	| 2.664		| 2.534
+500  			| 16.525 	| 5.365	| 5.217
+1000  			| 32.727 	| 10.205	| 11.122
+Time-to-run 	| 56836 	| 18471	| 18982
+
+### Accessing data 1000 times from Service local variable
+
+Cache cleared before each run
+
+Entities   	| Chrome 	| Firefox	| Safari
+-------------	| ------ | -----	| ----
+1  				| 0.001	 | 0			| 0
+250  			| 0.001  | 0			| 0.001
+500  			| 0		 | 0	| 0
+1000  			| 0.001	 | 0.001			| 0.001
+Time-to-run 	| 130	 | 67		| 83

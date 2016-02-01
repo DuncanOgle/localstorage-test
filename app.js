@@ -17,11 +17,96 @@ app.controller('mainController', ['$scope', 'Storage', function ($scope, Storage
     var reps = 1000;
 
 
+    //// TEST 1 - Loading
+    //Storage.load(1).then(function (data) {
+    //    var timing = [];
+    //    for (var i = 0; i < reps; i++) {
+    //        var start = Date.now();
+    //        Storage.get();
+    //        timing.push(Date.now() - start);
+    //    }
+    //    $scope.timings.push({quantity: 1, data: timing});
+    //
+    //    Storage.load(250).then(function (data) {
+    //        var timing = [];
+    //        for (var i = 0; i < reps; i++) {
+    //            var start = Date.now();
+    //            Storage.get();
+    //            timing.push(Date.now() - start);
+    //        }
+    //        $scope.timings.push({quantity: 250, data: timing});
+    //
+    //        Storage.load(500).then(function (data) {
+    //            var timing = [];
+    //            for (var i = 0; i < reps; i++) {
+    //                var start = Date.now();
+    //                Storage.get();
+    //                timing.push(Date.now() - start);
+    //            }
+    //            $scope.timings.push({quantity: 500, data: timing});
+    //
+    //            Storage.load(1000).then(function (data) {
+    //                var timing = [];
+    //                for (var i = 0; i < reps; i++) {
+    //                    var start = Date.now();
+    //                    Storage.get();
+    //                    timing.push(Date.now() - start);
+    //                }
+    //                $scope.timings.push({quantity: 1000, data: timing});
+    //                $scope.end = Date.now();
+    //            });
+    //        });
+    //    });
+    //});
+
+    //// TEST 2 - Saving
+    //Storage.load(1).then(function (data) {
+    //    var timing = [];
+    //    for (var i = 0; i < reps; i++) {
+    //        var start = Date.now();
+    //        Storage.save();
+    //        timing.push(Date.now() - start);
+    //    }
+    //    $scope.timings.push({quantity: 1, data: timing});
+    //
+    //    Storage.load(250).then(function (data) {
+    //        var timing = [];
+    //        for (var i = 0; i < reps; i++) {
+    //            var start = Date.now();
+    //            Storage.save();
+    //            timing.push(Date.now() - start);
+    //        }
+    //        $scope.timings.push({quantity: 250, data: timing});
+    //
+    //        Storage.load(500).then(function (data) {
+    //            var timing = [];
+    //            for (var i = 0; i < reps; i++) {
+    //                var start = Date.now();
+    //                Storage.save();
+    //                timing.push(Date.now() - start);
+    //            }
+    //            $scope.timings.push({quantity: 500, data: timing});
+    //
+    //            Storage.load(1000).then(function (data) {
+    //                var timing = [];
+    //                for (var i = 0; i < reps; i++) {
+    //                    var start = Date.now();
+    //                    Storage.save();
+    //                    timing.push(Date.now() - start);
+    //                }
+    //                $scope.timings.push({quantity: 1000, data: timing});
+    //                $scope.end = Date.now();
+    //            });
+    //        });
+    //    });
+    //});
+
+    // TEST 3 - Searching
     Storage.load(1).then(function (data) {
         var timing = [];
         for (var i = 0; i < reps; i++) {
             var start = Date.now();
-            Storage.get();
+            Storage.search();
             timing.push(Date.now() - start);
         }
         $scope.timings.push({quantity: 1, data: timing});
@@ -30,7 +115,7 @@ app.controller('mainController', ['$scope', 'Storage', function ($scope, Storage
             var timing = [];
             for (var i = 0; i < reps; i++) {
                 var start = Date.now();
-                Storage.get();
+                Storage.search();
                 timing.push(Date.now() - start);
             }
             $scope.timings.push({quantity: 250, data: timing});
@@ -39,7 +124,7 @@ app.controller('mainController', ['$scope', 'Storage', function ($scope, Storage
                 var timing = [];
                 for (var i = 0; i < reps; i++) {
                     var start = Date.now();
-                    Storage.get();
+                    Storage.search();
                     timing.push(Date.now() - start);
                 }
                 $scope.timings.push({quantity: 500, data: timing});
@@ -48,7 +133,7 @@ app.controller('mainController', ['$scope', 'Storage', function ($scope, Storage
                     var timing = [];
                     for (var i = 0; i < reps; i++) {
                         var start = Date.now();
-                        Storage.get();
+                        Storage.search();
                         timing.push(Date.now() - start);
                     }
                     $scope.timings.push({quantity: 1000, data: timing});
@@ -77,16 +162,23 @@ app.factory('Storage', ['$http', function ($http) {
     return {
         load: function (quantity) {
             return $http.get('dummy-' + quantity + ".json").then(function (response) {
-                localStorage['data'] = JSON.stringify(response.data);
-                var data = response.data;
+                //console.log(response);
+                //localStorage['data'] = JSON.stringify(response.data);
+                data = response.data;
             });
         },
         get: function () {
             //return JSON.parse(localStorage['data']);
             return data;
         },
-        getFromStorage: function() {
-            return data;
+        save: function () {
+            localStorage['data'] = JSON.stringify(data);
+        },
+        search: function () {
+            //console.log(data);
+            // Loop over every item
+            //for(var i = 0, len = JSON.parse(localStorage['data']); i<len; i++) {}
+            for(var i = 0, len = data.length; i<len; i++) {}
         }
     };
 }]);
